@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-image: url(./Copilot_20250610_121759.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#home {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 0 15px;
+}
+
+.container h2 {
+  font-size: 3rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.auto-type {
+  color: #dc0522;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin: 0 10px;
+}
+
+button {
+  background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+  color: #333;
+  font-weight: bold;
+  font-style: oblique;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(to right, #70e1f5, #ffd194);
+  color: #000;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container h2 {
+    font-size: 2rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container h2 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+}

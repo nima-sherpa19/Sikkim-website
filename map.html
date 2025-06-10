@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Voice Map of Sikkim</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #45a049;
+      color: #fff;
+    }
+    h1 {
+      text-align: center;
+      margin: 20px 0 10px;
+      font-style: oblique;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+    #feedback {
+      text-align: center;
+      margin: 10px 0;
+      padding: 10px;
+      min-height: 1.5em;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    #map {
+      width: 90%;
+      max-width: 600px;
+      height: 500px;
+      margin: 20px auto;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    #mic-toggle {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      font-size: 2.5rem;
+      cursor: pointer;
+      z-index: 999;
+      transition: transform 0.2s ease;
+    }
+    #mic-toggle:hover {
+      transform: scale(1.2);
+    }
+    button {
+      background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+      color: #333;
+      font-weight: bold;
+      font-style: oblique;
+      margin: 30px auto;
+      display: block;
+      padding: 10px 15px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(to right, #70e1f5, #ffd194);
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Guess Where You Are?</h1>
+  <div id="feedback">🎙️ Tap the mic to start voice control</div>
+  <div id="map"></div>
+  <div id="mic-toggle" title="Toggle voice control">🎙️</div>
+  <button onclick="window.location.href='./index.html'">⬅️ Come Back</button>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+  <script>
+    const feedback = document.getElementById('feedback');
+    const micBtn = document.getElementById('mic-toggle');
+    let isListening = false;
+
+    const map = L.map('map').setView([27.533, 88.512], 9);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    const districts = {
+      gangtok: [27.3389, 88.6065],
+      north: [27.8, 88.6],
+      south: [27.1, 88.4],
+      west: [27.3, 88.2],
+      east: [27.5, 88.7],
+      pakyong: [27.21, 88.56],
+      namchi: [27.18, 88.41]
+    };
+
+    Object.entries(districts).forEach(([name, coords]) => {
+      L.marker(coords).addTo(map).bindPopup(name.charAt(0).toUpperCase() + name.slice(1));
+    });
+
+    function toggleMic() {
+      if (!annyang) {
+        feedback.innerText = '❌ Voice control not supported.';
+        return;
+      }
+
+      if (!isListening) {
+        annyang.start({ autoRestart: true, continuous: true });
+        micBtn.textContent = '🛑';
+        feedback.innerText = '🎤 Voice ON - Say "show Gangtok", "show Namchi", etc.';
+      } else {
+        annyang.abort();
+        micBtn.textContent = '🎙️';
+        feedback.innerText = '🛑 Voice OFF';
+      }
+      isListening = !isListening;
+    }
+
+    micBtn.addEventListener('click', toggleMic);
+
+    if (annyang) {
+      const commands = {
+        'show *district': function(district) {
+          const key = district.toLowerCase().trim();
+          console.log("Heard:", key);
+          if (districts[key]) {
+            map.flyTo(districts[key], 12, { duration: 1.2 });
+            const districtName = key.charAt(0).toUpperCase() + key.slice(1);
+            feedback.innerText = '📍 Showing: ' + districtName;
+          } else {
+            feedback.innerText = '❓ District not recognized: "' + district + '"';
+          }
+        },
+        'stop listening': function() {
+          if (isListening) toggleMic();
+        }
+      };
+      annyang.addCommands(commands);
+    }
+  </script>
+</body>
+</html>

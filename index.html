@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mobile page</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <h1 style="text-align:center; color:rgb(252, 251, 254);">Mobiles</h1>
+  <div class="gallery">
+    <div class="image-box"><img src="./Screenshot (61).png" alt="Image 1" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (62).png" alt="Image 2" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (63).png" alt="Image 3" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (64).png" alt="Image 4" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (65).png" alt="Image 5" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (66).png" alt="Image 6" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (67).png" alt="Image 7" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (68).png" alt="Image 8" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (69).png" alt="Image 9" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (70).png" alt="Image 10" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (71).png" alt="Image 11" class="gallery-img"></div>
+    <div class="image-box"><img src="./Screenshot (72).png" alt="Image 12" class="gallery-img"></div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <span class="close" id="closeBtn">&times;</span>
+    <span class="nav left" id="prevBtn">&#10094;</span>
+    <img id="lightbox-img" src="" alt="Expanded View">
+    <span class="nav right" id="nextBtn">&#10095;</span>
+  </div>
+  <button id="mic-btn" onclick="startListening()" style="position:fixed; bottom:20px; left:20px; z-index:9999; padding:10px 20px; font-size:16px; background:green; color:white; border:none; border-radius:8px; cursor:pointer;">
+    🎤 Start Listening
+  </button>
+  <script src="script.js"></script>
+</body>
+</html>
